@@ -1,0 +1,59 @@
+function [codes, ts] = load_pl2_encodes(path, method)
+
+pl2 = PL2GetFileIndex(path);
+
+
+
+switch nargin
+    case 2
+        method = upper(method);
+    case 1
+        method = 'DEFAULT';
+    otherwise
+        error('Not enough inputs');
+end
+
+
+
+%Read in the first strobed words
+[strobed] = PL2EventTs(path, 'Strobed');
+
+%plot(strobed.Ts, strobed.Strobed);
+
+vals = strobed.Strobed+256;%-32512;
+times = strobed.Ts;
+
+if strcmp('Method'
+
+
+timeDiffs = diff(times);
+
+c = 0;
+%if ~mod(size(vals,1),2) %If there are an even amount of events for pairing
+      for i = 1:(size(vals,1)-1)
+        if (timeDiffs(i)>tooClose && timeDiffs(i)<tooFar)
+            c=c+1;
+            lob(c)=vals(i);
+            hib(c)=vals(i+1);
+            ts(c)=times(i);
+            
+            
+             debug(i,1) = vals(i);
+             debug(i+1,1) = vals(i+1);
+             debug(i,2) = double(lob(c))+(double( hib(c))*256);
+             debug(i+1,2) = double(lob(c))+(double( hib(c))*256);
+             
+              debug(i,3) = 1;
+              debug(i+1,3) = 1;
+        end
+            
+
+      end
+    
+ 
+codes = nan(1,c);
+
+
+for i=1:length(lob);
+    codes(i)=double(lob(i))+(double(hib(i))*256);
+end
