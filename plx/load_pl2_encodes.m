@@ -1,4 +1,18 @@
+%Philip Putnam
+%   2015, Gothard lab, University of Arizona
+%
+%   Inputs:
+%       path - the path to the '.pl2' file, in the format of the host system 
+%       method - Either 'DEFAULT' for raw strobed codes, or 'HILO' for
+%       hi-byte/low-byte pairs
+%
+%   Outputs:
+%       codes - the values of the strobed codes
+%       ts - the timestamps of the strobed codes
+%   
+
 function [codes, ts] = load_pl2_encodes(path, method)
+
 
 % Load the pl2 file index
 pl2 = PL2GetFileIndex(path);
