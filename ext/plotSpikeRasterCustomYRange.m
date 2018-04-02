@@ -146,9 +146,6 @@ rasterWindowOffset = p.Results.RasterWindowOffset;
 vertSpikePosition = p.Results.VertSpikePosition;
 vertSpikeHeight = p.Results.VertSpikeHeight;
 
-
-
-
 if ~isnan(rasterWindowOffset) && relSpikeStartTime==0
     relSpikeStartTime = rasterWindowOffset;
 elseif ~isnan(rasterWindowOffset) && relSpikeStartTime~=0
@@ -192,9 +189,6 @@ if islogical(spikes)
             xPoints = xPoints(:);
             yPoints = yPoints(:);
             plot(xPoints,yPoints,'k',lineFormat{:});
-            
-           % vertSpikePosition
-            
         case 'vertline'
             %% Vertical Lines
             % Find the trial (yPoints) and timebin (xPoints) of each spike
@@ -213,9 +207,6 @@ if islogical(spikes)
             xPoints = xPoints(:);
             yPoints = yPoints(:);
             plot(xPoints,yPoints,'k',lineFormat{:});
-            
-            
-            
         case 'horzline2'
             %% Horizontal lines, for many timebins
             % Plots a horizontal line the width of a time bin for each
@@ -394,8 +385,6 @@ else % Equivalent to elseif iscell(spikes).
         %% Vertical or horizontal line logic
         nTotalSpikes = sum(cellfun(@length,spikes));
         
-        
-        
         % Preallocation is possible since we know how many points to
         % plot, unlike discrete case. 3 points per spike - the top pt,
         % bottom pt, and NaN.
@@ -404,8 +393,6 @@ else % Equivalent to elseif iscell(spikes).
         currentInd = 1;
         
         if strcmpi(plotType,'vertline')
-            
-            %vertSpikePosition
             %% Vertical Lines
             halfSpikeHeight = vertSpikeHeight/2;
             for trials = 1:nTrials
@@ -419,10 +406,6 @@ else % Equivalent to elseif iscell(spikes).
                 trialYPoints = [ (trials-halfSpikeHeight)*ones(1,nSpikes);...
                     (trials+halfSpikeHeight)*ones(1,nSpikes); nanSeparator ];
                 trialYPoints = trialYPoints(:);
-                
-                % --------- v I ADDED THIS v --------- 
-                trialYPoints = trialYPoints+vertSpikePosition;
-                % --------- ^ I ADDED THIS ^ --------- 
                 
                 % Save points and update current index
                 xPoints(currentInd:currentInd+nSpikes*3-1) = trialXPoints;
